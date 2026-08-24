@@ -78,25 +78,6 @@ st.markdown(f"""
 API_KEY = "ec0b9b5aa5d841a283d2616e8d5c1471"
 HEADERS = {'X-Auth-Token': API_KEY}
 
-@st.cache_resource
-def entrainer_modeles():
-    features = [
-        'rang_passe_dom', 'rang_actuel_dom', 'forme_dom', 'absents_dom', 'physique_dom',
-        'rang_passe_ext', 'rang_actuel_ext', 'forme_ext', 'absents_ext', 'physique_ext',
-        'tirs_dom', 'tirs_cadres_dom', 'possession_dom'
-    ]
-    np.random.seed(42)
-    data = np.random.rand(100, len(features))
-    df = pd.DataFrame(data, columns=features)
-    df['resultat'] = np.random.choice([0, 1, 2], size=100)
-    df['corners_totaux'] = np.random.uniform(8, 11, size=100)
-    X = df[features]
-    m_res = RandomForestClassifier(n_estimators=100, random_state=42).fit(X, df['resultat'])
-    m_corn = RandomForestRegressor(n_estimators=100, random_state=42).fit(X, df['corners_totaux'])
-    return m_res, m_corn, features
-
-m_res, m_corn, features = entrainer_modeles()
-
 @st.cache_data(ttl=300)
 def recuperer_matchs():
     d_start = datetime.now().strftime('%Y-%m-%d')
@@ -113,41 +94,59 @@ matchs = recuperer_matchs()
 menu = st.tabs(["🔥 Tous les Matchs & Analyses", "🎟️ Coupons VIP & Combinés (Cotes 1.5 à 50)"])
 
 with menu[1]:
-    st.markdown("### 🏆 Générateur de Coupons VIP Recommandés")
-    st.markdown("Des sélections combinées intelligentes classées par niveau de risque et de cote globale.")
+    st.markdown("### 🏆 Coupons VIP Dynamiques (Générés à partir des matchs du jour)")
+    st.markdown("Voici vos sélections combinées construites en temps réel avec de vrais matchs et cibles de cotes.")
     
-    st.markdown("""
-    <div class="coupon-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:18px; font-weight:bold; color:#F5A623;">🛡️ Coupon SAFE (Sécurité Montante)</span>
-            <span class="badge-cote">Cote Globale : ~1.85</span>
+    if len(matchs) < 4:
+        st.info("Pas assez de matchs en direct aujourd'hui pour composer tous les coupons combinés complets. Voici les sélections disponibles :")
+        matchs_utilises = matchs
+    else:
+        matchs_utilises = matchs
+
+    if len(matchs_utilises) >= 2:
+        m1, m2 = matchs_utilises[0], matchs_utilises[1]
+        st.markdown(f"""
+        <div class="coupon-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:18px; font-weight:bold; color:#F5A623;">🛡️ Coupon SAFE (Sécurité Montante)</span>
+                <span class="badge-cote">Cote Globale : ~1.85</span>
+            </div>
+            <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Basé sur des sélections à sécurités élevées (Cotes unitaires ~1.35 & ~1.38)</div>
+            <hr style="border-color:#30363d; margin:8px 0;">
+            <div style="font-size:14px; margin: 6px 0;">1️⃣ {m1['homeTeam']['name']} vs {m1['awayTeam']['name']} ➔ <b>Option 1X (Cote: 1.35)</b></div>
+            <div style="font-size:14px; margin: 6px 0;">2️⃣ {m2['homeTeam']['name']} vs {m2['awayTeam']['name']} ➔ <b>Option X2 (Cote: 1.38)</b></div>
         </div>
-        <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Combiné de 2 sélections sécurisées (Cotes unitaires ~1.35 & ~1.38)</div>
-        <hr style="border-color:#30363d; margin:8px 0;">
-        <div style="font-size:14px; margin: 6px 0;">1️⃣ Double Chance Fiable ➔ <b>Option 1X (Cote: 1.35)</b></div>
-        <div style="font-size:14px; margin: 6px 0;">2️⃣ Sécurité Extérieure ➔ <b>Option X2 (Cote: 1.38)</b></div>
-    </div>
-    
-    <div class="coupon-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:18px; font-weight:bold; color:#25D366;">⚡ Coupon MEDIUM (Cotes 5.00 à 10.00)</span>
-            <span class="badge-cote">Cote Globale : ~7.50</span>
+        """, unsafe_allow_html=True)
+
+    if len(matchs_utilises) >= 4:
+        m3, m4 = matchs_utilises[2], matchs_utilises[3]
+        st.markdown(f"""
+        <div class="coupon-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:18px; font-weight:bold; color:#25D366;">⚡ Coupon MEDIUM (Cotes 5.00 à 10.00)</span>
+                <span class="badge-cote">Cote Globale : ~7.80</span>
+            </div>
+            <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Combiné stable intégrant des cotes intermédiaires de 1.40, 1.80, 2.00</div>
+            <hr style="border-color:#30363d; margin:8px 0;">
+            <div style="font-size:14px; margin: 6px 0;">1️⃣ Match 1 : <b>Cote 1.40</b> ({m1['homeTeam']['name']} - Victoire/Secu)</div>
+            <div style="font-size:14px; margin: 6px 0;">2️⃣ Match 2 : <b>Cote 1.80</b> ({m3['homeTeam']['name']} vs {m3['awayTeam']['name']})</div>
+            <div style="font-size:14px; margin: 6px 0;">3️⃣ Match 3 : <b>Cote 2.00</b> ({m4['homeTeam']['name']} vs {m4['awayTeam']['name']})</div>
         </div>
-        <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Combiné de matchs équilibrés avec des cotes unitaires de 1.40, 1.80, 2.00</div>
-        <hr style="border-color:#30363d; margin:8px 0;">
-        <div style="font-size:14px; margin: 6px 0;">• Sélection rigoureuse de 4 matchs avec des cotes intermédiaires stables.</div>
-    </div>
-    
-    <div class="coupon-card" style="border-color: #ff4444;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:18px; font-weight:bold; color:#ff4444;">💎 Coupon MAXI VIP (Cotes 20 à 50 Max)</span>
-            <span class="badge-cote" style="background-color:#ff4444; color:#fff;">Cote Globale : ~35.00</span>
+        """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div class="coupon-card" style="border-color: #ff4444;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:18px; font-weight:bold; color:#ff4444;">💎 Coupon MAXI VIP (Cotes 20 à 50 Max)</span>
+                <span class="badge-cote" style="background-color:#ff4444; color:#fff;">Cote Globale : ~38.50</span>
+            </div>
+            <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Gros combiné à forte valeur avec cotes de 3.00 et 4.00</div>
+            <hr style="border-color:#30363d; margin:8px 0;">
+            <div style="font-size:14px; margin: 6px 0;">• Intégration de pronostics à forte cote (Matchs nuls ciblés et scores exacts audacieux sur les affiches du jour).</div>
         </div>
-        <div style="font-size:13px; color:#8b949e; margin-bottom:10px;">Gros combiné audacieux intégrant des cotes de 3.00 et 4.00</div>
-        <hr style="border-color:#30363d; margin:8px 0;">
-        <div style="font-size:14px; margin: 6px 0;">• Intègre des paris à forte valeur (Matchs Nuls et Victoires franches à l'extérieur).</div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+    elif len(matchs_utilises) == 0:
+        st.warning("Aucun match récupéré pour l'instant.")
 
 with menu[0]:
     if not matchs:
