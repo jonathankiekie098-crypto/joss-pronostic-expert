@@ -17,45 +17,43 @@ if 'credits' not in st.session_state:
 st.cache_resource.clear()
 st.cache_data.clear()
 
-# CSS - Design Pro Structuré & Ultra-Soigné
+# CSS - Style Option de Paris / Bookmaker Pro
 st.markdown("""
 <style>
-    .main { background-color: #05080f; }
-    .stApp { background-color: #05080f; color: #f8fafc; font-family: 'Inter', sans-serif; }
+    .main { background-color: #060913; }
+    .stApp { background-color: #060913; color: #f8fafc; font-family: 'Inter', sans-serif; }
     
     .header-box {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        border: 1px solid #334155; border-radius: 16px; padding: 20px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        border: 1px solid #334155; border-radius: 14px; padding: 18px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
     
-    .match-card {
-        background: #0f172a; border: 1px solid #1e293b; border-radius: 16px;
-        padding: 24px; margin-bottom: 22px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    .match-box {
+        background: #0f172a; border: 1px solid #1e293b; border-radius: 14px;
+        padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     
-    .section-title {
-        font-size: 14px; font-weight: 800; color: #38bdf8; text-transform: uppercase;
-        letter-spacing: 1px; margin-bottom: 12px; border-left: 3px solid #38bdf8; padding-left: 8px;
+    .market-category {
+        font-size: 13px; font-weight: 800; color: #38bdf8; text-transform: uppercase;
+        letter-spacing: 0.8px; margin: 14px 0 8px 0; display: flex; align-items: center; gap: 6px;
     }
-    
-    .grid-stats {
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px;
-    }
-    .stat-box {
-        background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; text-align: center;
-    }
-    .stat-value { font-size: 16px; font-weight: 900; color: #ffffff; }
-    .stat-label { font-size: 11px; color: #94a3b8; font-weight: 700; margin-top: 2px; }
 
-    .badge-market { background-color: #065f46; color: #34d399; padding: 5px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid #059669; display: inline-block; margin: 3px; }
-    .badge-market-sec { background-color: #1e40af; color: #60a5fa; padding: 5px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid #2563eb; display: inline-block; margin: 3px; }
-    
-    .expert-ai-box { 
-        background: #020617; border-left: 4px solid #fbbf24; padding: 12px 16px; 
-        border-radius: 0 10px 10px 0; font-size: 13px; color: #cbd5e1; margin-top: 14px; 
-        line-height: 1.5; border-top: 1px solid #1e293b; border-right: 1px solid #1e293b; 
+    /* Grille de type Boutons / Options de Pari */
+    .odds-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-bottom: 10px;
     }
+    
+    .odd-btn {
+        background: #020617; border: 1px solid #334155; border-radius: 8px;
+        padding: 10px 12px; text-align: left; transition: all 0.2s;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .odd-btn:hover { border-color: #38bdf8; background: #090d1f; }
+    
+    .market-name { font-size: 12px; color: #94a3b8; font-weight: 600; }
+    .market-value { font-size: 13px; color: #ffffff; font-weight: 800; }
+    .market-odd { background: #1e293b; color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 900; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -80,16 +78,16 @@ col_h1, col_h2 = st.columns([3, 1])
 with col_h1:
     st.markdown("""
     <div class="header-box">
-        <div style="font-size:22px; font-weight:900; color:#ffffff;">👑 JOSS PRONOSTIC EXPERT</div>
-        <div style="font-size:11px; color:#38bdf8; font-weight:800; letter-spacing: 2px; margin-top: 4px;">MODULE D'ANALYSE TACTIQUE & STATISTIQUES AVANCÉES</div>
+        <div style="font-size:20px; font-weight:900; color:#ffffff;">👑 JOSS PRONOSTIC EXPERT</div>
+        <div style="font-size:11px; color:#38bdf8; font-weight:800; letter-spacing: 1.5px; margin-top: 2px;">INTERFACES MARCHÉS & OPTIONS DE PARIS PRO</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col_h2:
     st.markdown(f"""
-    <div class="header-box" style="text-align: center; padding: 16px;">
-        <div style="color: #fbbf24; font-weight: 900; font-size: 16px;">⚡ {st.session_state.credits} / 3</div>
-        <div style="font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Crédits IA Dispos</div>
+    <div class="header-box" style="text-align: center; padding: 14px;">
+        <div style="color: #fbbf24; font-weight: 900; font-size: 15px;">⚡ {st.session_state.credits} / 3</div>
+        <div style="font-size: 9px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Crédits IA</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -97,13 +95,13 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 menu_choix = st.selectbox(
     "Navigation",
-    ["📊 Analyseur Global & Scores Exacts", "🔥 Matchs du Jour & Options Détaillées", "🎟️ Coupons VIP"],
+    ["📋 Scores Exacts & Synthèse", "🎯 Matchs & Options Détaillées", "🎟️ Coupons VIP"],
     label_visibility="collapsed"
 )
 
-if menu_choix == "📊 Analyseur Global & Scores Exacts":
-    st.markdown("### 📋 Tableau de Synthèse des Rencontres du Jour")
-    st.markdown("<div style='color: #94a3b8; font-size: 13px; margin-bottom: 20px;'>Vue d'ensemble de tous les matchs sélectionnés avec leurs scores exacts anticipés par l'algorithme.</div>", unsafe_allow_html=True)
+if menu_choix == "📋 Scores Exacts & Synthèse":
+    st.markdown("### 📋 Grille des Scores Exacts du Jour")
+    st.markdown("<div style='color: #94a3b8; font-size: 13px; margin-bottom: 20px;'>Sélection complète des matchs avec leurs scores exacts modélisés sous forme d'options prêtes à l'emploi.</div>", unsafe_allow_html=True)
     
     if not matchs:
         st.info("Aucun match disponible pour l'instant.")
@@ -118,22 +116,26 @@ if menu_choix == "📊 Analyseur Global & Scores Exacts":
             np.random.seed(match_id)
             score_d = int(np.random.choice([0, 1, 2, 3], p=[0.2, 0.4, 0.3, 0.1]))
             score_e = int(np.random.choice([0, 1, 2], p=[0.3, 0.5, 0.2]))
+            cote_score = round(float(np.random.uniform(6.5, 15.0)), 2)
             
             st.markdown(f"""
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="match-box" style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
                 <div>
-                    <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">🏆 {comp} • ⏰ {heure} UTC</div>
+                    <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 3px;">🏆 {comp} • ⏰ {heure} UTC</div>
                     <div style="font-size: 15px; font-weight: 800; color: #ffffff;">{nom_dom} vs {nom_ext}</div>
                 </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 11px; color: #94a3b8; font-weight: 700;">SCORE EXACT PRÉVU</div>
-                    <div style="font-size: 20px; font-weight: 900; color: #fbbf24;">{score_d} - {score_e}</div>
+                <div style="background: #020617; border: 1px solid #334155; padding: 8px 16px; border-radius: 10px; text-align: right;">
+                    <div style="font-size: 10px; color: #94a3b8; font-weight: 700;">OPTION SCORE EXACT</div>
+                    <div style="display: flex; gap: 10px; align-items: center; margin-top: 2px;">
+                        <span style="font-size: 18px; font-weight: 900; color: #fbbf24;">{score_d} - {score_e}</span>
+                        <span class="market-odd">@{cote_score}</span>
+                    </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-elif menu_choix == "🔥 Matchs du Jour & Options Détaillées":
-    st.markdown("### 🎯 Analyse Complète & Marchés Spécifiques par Match")
+elif menu_choix == "🎯 Matchs & Options Détaillées":
+    st.markdown("### 🎯 Marchés Spécifiques & Options de Paris")
     
     if not matchs:
         st.info("Aucun match disponible.")
@@ -145,86 +147,100 @@ elif menu_choix == "🔥 Matchs du Jour & Options Détaillées":
             comp = m['competition']['name']
             match_id = m['id']
             
-            # Génération cohérente des stats basées sur l'ID du match
             np.random.seed(match_id)
             score_d = int(np.random.choice([0, 1, 2, 3], p=[0.2, 0.4, 0.3, 0.1]))
             score_e = int(np.random.choice([0, 1, 2], p=[0.3, 0.5, 0.2]))
             
             tirs_cad_d = int(np.random.randint(4, 9))
             tirs_cad_e = int(np.random.randint(2, 7))
-            total_tirs = tirs_cad_d + tirs_cad_e + int(np.random.randint(6, 12))
+            total_tirs = tirs_cad_d + tirs_cad_e + int(np.random.randint(5, 10))
             
             intervalle_but = np.random.choice(["15' - 30'", "31' - 45'", "46' - 60'", "75' - 90+"])
-            remplacant_buteur = np.random.choice([f"Oui ({nom_dom} - Impact Sub)", f"Oui ({nom_ext} - Joker offensif)", "Non (Titulaires dominants)"])
-            mi_temps_gagnee = f"{nom_dom} gagne au moins une mi-temps (74%)" if score_d >= score_e else f"{nom_ext} gagne au moins une mi-temps (68%)"
+            remplacant = np.random.choice([f"Oui ({nom_dom})", f"Oui ({nom_ext})", "Non"])
+            mi_temps_gagne = np.random.choice([f"{nom_dom} (1 Mi-temps)", f"{nom_ext} (1 Mi-temps)", "Aucune / Égalité"])
             
             st.markdown(f"""
-            <div class="match-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div class="match-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 10px;">
                     <div>
-                        <div style="color: #38bdf8; font-size: 11px; font-weight: 800; margin-bottom: 3px;">🏆 {comp.upper()} • ⏰ {heure} UTC</div>
-                        <div style="font-size: 18px; font-weight: 900; color: #ffffff;">{nom_dom} <span style="color:#64748b;">vs</span> {nom_ext}</div>
+                        <div style="color: #38bdf8; font-size: 11px; font-weight: 800; margin-bottom: 2px;">🏆 {comp.upper()} • ⏰ {heure} UTC</div>
+                        <div style="font-size: 17px; font-weight: 900; color: #ffffff;">{nom_dom} <span style="color:#64748b;">vs</span> {nom_ext}</div>
                     </div>
-                    <div style="background: #1e293b; padding: 8px 16px; border-radius: 10px; border: 1px solid #334155; text-align: center;">
-                        <div style="font-size: 10px; color: #94a3b8; font-weight: 700;">SCORE EXACT</div>
-                        <div style="font-size: 18px; font-weight: 900; color: #fbbf24;">{score_d} - {score_e}</div>
-                    </div>
-                </div>
-
-                <div class="section-title">📊 Statistiques de Tirs Cadrés Estimés</div>
-                <div class="grid-stats">
-                    <div class="stat-box">
-                        <div class="stat-value" style="color: #38bdf8;">{tirs_cad_d}</div>
-                        <div class="stat-label">Tirs Cadrés ({nom_dom})</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" style="color: #fbbf24;">{tirs_cad_e}</div>
-                        <div class="stat-label">Tirs Cadrés ({nom_ext})</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value" style="color: #34d399;">{total_tirs}</div>
-                        <div class="stat-label">Total Match (Cadrés + Non Cadrés)</div>
+                    <div style="background: #020617; padding: 6px 14px; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+                        <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">SCORE EXACT</div>
+                        <div style="font-size: 15px; font-weight: 900; color: #fbbf24;">{score_d} - {score_e}</div>
                     </div>
                 </div>
 
-                <div class="section-title">⚡ Options & Marchés Alternatifs</div>
-                <div style="margin-bottom: 12px;">
-                    <span class="badge-market">⚽ Un remplaçant va marquer : <b>{remplacant_buteur}</b></span>
-                    <span class="badge-market-sec">⏱️ Intervalle 1er But / Temps fort : <b>{intervalle_but}</b></span>
-                    <span class="badge-market" style="background:#78350f; color:#fbbf24; border-color:#d97706;">🛡️ Mi-temps : <b>{mi_temps_gagnee}</b></span>
+                <div class="market-category">⚽ Options Principales & Résultat</div>
+                <div class="odds-grid">
+                    <div class="odd-btn">
+                        <span class="market-name">1X2 / Double Chance</span>
+                        <span class="market-value">1X (Sécurisé)</span>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="market-name">Gagne au moins 1 mi-temps</span>
+                        <span class="market-value">{mi_temps_gagne}</span>
+                    </div>
                 </div>
 
-                <div class="expert-ai-box">
-                    🤖 <b>Analyse Tactique Experte :</b> Le schéma de jeu préédit une pression constante. L'équipe de {nom_dom} devrait faire la différence dans l'intervalle <b>{intervalle_but}</b> grâce à ses ressources sur le banc.
+                <div class="market-category">🎯 Statistiques de Tirs Cadrés</div>
+                <div class="odds-grid">
+                    <div class="odd-btn">
+                        <span class="market-name">Tirs Cadrés ({nom_dom})</span>
+                        <span class="market-odd">+{tirs_cad_d - 1}</span>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="market-name">Tirs Cadrés ({nom_ext})</span>
+                        <span class="market-odd">+{tirs_cad_e - 1}</span>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="market-name">Total Tirs (Cadrés + Non)</span>
+                        <span class="market-odd">+{total_tirs}</span>
+                    </div>
+                </div>
+
+                <div class="market-category">⚡ Événements & Intervalles de Buts</div>
+                <div class="odds-grid">
+                    <div class="odd-btn">
+                        <span class="market-name">Un remplaçant va marquer</span>
+                        <span class="market-value">{remplacant}</span>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="market-name">Intervalle 1er But / Temps Fort</span>
+                        <span class="market-value" style="color:#38bdf8;">{intervalle_but}</span>
+                    </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
 elif menu_choix == "🎟️ Coupons VIP":
-    st.markdown("### 🏆 Coupons VIP Combinés & Options Spéciales")
-    st.markdown("<div style='color: #94a3b8; font-size: 13px; margin-bottom: 20px;'>Sélections premium intégrant les options de tirs, buts par intervalle et victoires par mi-temps.</div>", unsafe_allow_html=True)
+    st.markdown("### 🏆 Coupons VIP sous forme de Sélections d'Options")
+    st.markdown("<div style='color: #94a3b8; font-size: 13px; margin-bottom: 20px;'>Combinés professionnels structurés par options de paris claires.</div>", unsafe_allow_html=True)
     
     if len(matchs) >= 2:
         m1, m2 = matchs[0], matchs[1]
         st.markdown(f"""
-        <div style="background: #0f172a; border: 1px solid #fbbf24; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <span style="font-size:16px; font-weight:900; color:#fbbf24;">🛡️ COUPON SAFE COMBINÉ (Cote ~1.95)</span>
-                <span style="background:#78350f; color:#fbbf24; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 800;">Confiance 90%</span>
+        <div class="match-box" style="border-color: #fbbf24;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:15px; font-weight:900; color:#fbbf24;">🛡️ COMBINÉ SAFE (Cote ~1.95)</span>
+                <span style="background:#78350f; color:#fbbf24; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 800;">Confiance 90%</span>
             </div>
-            <hr style="border-color:#334155; margin:8px 0;">
-            <div style="font-size:13px; color: #cbd5e1; margin: 8px 0;">1️⃣ {m1['homeTeam']['name']} vs {m1['awayTeam']['name']} ➔ <b style="color:#38bdf8;">Équipe à domicile gagne au moins une mi-temps (1.38)</b></div>
-            <div style="font-size:13px; color: #cbd5e1; margin: 8px 0;">2️⃣ {m2['homeTeam']['name']} vs {m2['awayTeam']['name']} ➔ <b style="color:#38bdf8;">Plus de 7.5 tirs cadrés dans le match (1.42)</b></div>
+            <div class="odds-grid">
+                <div class="odd-btn" style="border-color: #fbbf24;">
+                    <div>
+                        <div class="market-name">{m1['homeTeam']['name']} vs {m1['awayTeam']['name']}</div>
+                        <div class="market-value">Gagne au moins une mi-temps</div>
+                    </div>
+                    <span class="market-odd">1.38</span>
+                </div>
+                <div class="odd-btn" style="border-color: #fbbf24;">
+                    <div>
+                        <div class="market-name">{m2['homeTeam']['name']} vs {m2['awayTeam']['name']}</div>
+                        <div class="market-value">Total tirs cadrés du match</div>
+                    </div>
+                    <span class="market-odd">1.42</span>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
-        
-    st.markdown("""
-    <div style="background: #0f172a; border: 1px solid #34d399; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:16px; font-weight:900; color:#34d399;">⚡ COUPON EXPERT BUTS & INTERVALLES (Cote ~6.50)</span>
-            <span style="background:#065f46; color:#34d399; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 800;">High Value</span>
-        </div>
-        <hr style="border-color:#334155; margin:8px 0;">
-        <div style="font-size:13px; color: #cbd5e1; margin: 8px 0;">• Sélection combinée intégrant un but de remplaçant et les intervalles de temps clés sur les affiches majeures.</div>
-    </div>
-    """, unsafe_allow_html=True)
