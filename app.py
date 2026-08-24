@@ -4,6 +4,7 @@ import numpy as np
 import requests
 from datetime import datetime, timedelta
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+import scipy.stats as stats
 
 # Configuration de la page
 st.set_page_config(
@@ -160,19 +161,29 @@ else:
             tot = p_1 + p_x + p_2
             p_1, p_x, p_2 = p_1/tot, p_x/tot, p_2/tot
             
-            # Alignement strict de la logique
+            # Alignement logique 1X2 & Double Chance
             if p_1 >= p_x and p_1 >= p_2:
                 prono_1x2 = f"1 (Victoire Domicile) — {p_1*100:.0f}%"
                 dc = "1X (Domicile ou Nul)"
-                p_ft = "2-1" if p_1 > 0.55 else "1-0"
             elif p_2 >= p_1 and p_2 >= p_x:
                 prono_1x2 = f"2 (Victoire Extérieur) — {p_2*100:.0f}%"
                 dc = "X2 (Nul ou Extérieur)"
-                p_ft = "1-2" if p_2 > 0.55 else "0-1"
             else:
                 prono_1x2 = f"X (Match Nul) — {p_x*100:.0f}%"
                 dc = "1X ou X2"
-                p_ft = "1-1" if p_x > 0.40 else "0-0"
+                
+            # Calcul des buts par Loi de Poisson
+            lambda_dom = max(0.5, (att_dom * def_ext * 1.35))
+            lambda_ext = max(0.5, (att_ext * def_dom * 1.10))
+
+            score_matrix = {}
+            for h in range(5):
+                for a in range(5):
+                    prob = stats.poisson.pmf(h, lambda_dom) * stats.poisson.pmf(a, lambda_ext)
+                    score_matrix[(h, a)] = prob
+            
+            score_probable = max(score_matrix, key=score_matrix.get)
+            p_ft = f"{score_probable[0]}-{score_probable[1]}"
                 
             c_pred = m_corn.predict(vec)[0]
             
@@ -191,7 +202,10 @@ else:
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <div class="stat-box" style="flex: 1;">⚽ <b>Score Exact :</b> <span style="color:#ffffff;">{p_ft}</span></div>
-                    <div class="stat-box" style="flex: 1;">🚩 <b>Corners :</b> <span style="color:#ffffff;">{c_pred:.1f} ({'+8.5' if c_pred > 8.5 else '-8.5'})</span></div>
+                    <div class="stat-box" style="flex: 1;">🚩 <b>Corners :</b> <span style="color:#ffffff;">{c_pred:.1f}</span></div>
+                </div>
+                <div style="margin-top: 8px; font-size: 11px; color: #8b949e; text-align: center;">
+                    📊 xG Attendu — Domicile : <b>{lambda_dom:.2f}</b> | Extérieur : <b>{lambda_ext:.2f}</b>
                 </div>
             </div>
             """, unsafe_allow_html=True)
