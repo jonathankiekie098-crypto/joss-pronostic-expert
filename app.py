@@ -17,7 +17,7 @@ if 'credits' not in st.session_state:
 st.cache_resource.clear()
 st.cache_data.clear()
 
-# CSS - Style application mobile pro avancée
+# CSS - Style application mobile pro avancée sans codes promos
 st.markdown("""
 <style>
     .main { background-color: #080c14; }
@@ -44,12 +44,6 @@ st.markdown("""
         background: linear-gradient(135deg, #111827 0%, #1f293d 100%);
         border: 2px solid #F5A623; border-radius: 14px;
         padding: 18px; margin-bottom: 18px; box-shadow: 0 6px 15px rgba(245, 166, 35, 0.15);
-    }
-    
-    .promo-card {
-        background: linear-gradient(135deg, #111827 0%, #1a1003 100%);
-        border: 2px solid #F5A623; border-radius: 14px;
-        padding: 20px; margin-bottom: 20px; text-align: center;
     }
     
     .team-name { font-size: 16px; font-weight: 700; color: #f3f4f6; }
@@ -98,9 +92,10 @@ with col_h2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
+# Navigation recentrée uniquement sur l'analyse et les pronostics
 menu_choix = st.selectbox(
     "Navigation",
-    ["📊 Analyseur IA Pro", "🔥 Matchs & xG du Jour", "🎟️ Coupons VIP", "🎁 Cadeaux & Promos"],
+    ["📊 Analyseur IA Pro", "🔥 Matchs & xG du Jour", "🎟️ Coupons VIP"],
     label_visibility="collapsed"
 )
 
@@ -257,19 +252,5 @@ elif menu_choix == "🎟️ Coupons VIP":
         <div style="font-size:13px; color:#9ca3af; margin-bottom:8px;">Indice de confiance : 78%</div>
         <hr style="border-color:#1f293d; margin:6px 0;">
         <div style="font-size:14px; margin: 4px 0;">• Sélection audacieuse intégrant des cotes de 3.00 et 4.00 sur les affiches majeures.</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-elif menu_choix == "🎁 Cadeaux & Promos":
-    st.markdown("### 🎁 Espace Partenaires & Codes Promos")
-    st.markdown("Profitez de nos codes promotionnels exclusifs.")
-    
-    st.markdown("""
-    <div class="promo-card">
-        <div style="font-size: 18px; font-weight: 800; color: #F5A623; margin-bottom: 8px;">✨ CODE PROMO OFFICIEL</div>
-        <div style="font-size: 24px; font-weight: 900; background: #232d3f; padding: 12px; border-radius: 10px; color: #00E5FF; margin: 12px 0; border: 1px dashed #F5A623;">GET1PRO</div>
-        <div style="font-size: 13px; color: #9ca3af; line-height: 1.5;">
-            Colle ce code à l'inscription chez nos partenaires pour activer ton bonus de bienvenue exclusif.
-        </div>
     </div>
     """, unsafe_allow_html=True)
