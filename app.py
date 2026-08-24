@@ -17,7 +17,6 @@ if 'credits' not in st.session_state:
 st.cache_resource.clear()
 st.cache_data.clear()
 
-# CSS - Style application mobile pro avancée sans codes promos
 st.markdown("""
 <style>
     .main { background-color: #080c14; }
@@ -72,7 +71,6 @@ def recuperer_matchs():
 matchs = recuperer_matchs()
 total_matchs = len(matchs)
 
-# En-tête profil et crédits
 col_h1, col_h2 = st.columns([3, 1])
 with col_h1:
     st.markdown("""
@@ -92,7 +90,6 @@ with col_h2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Navigation recentrée uniquement sur l'analyse et les pronostics
 menu_choix = st.selectbox(
     "Navigation",
     ["📊 Analyseur IA Pro", "🔥 Matchs & xG du Jour", "🎟️ Coupons VIP"],
@@ -141,8 +138,13 @@ if menu_choix == "📊 Analyseur IA Pro":
             match_id = m['id']
             
             np.random.seed(match_id)
-            xg_d = round(np.random.uniform(1.2, 2.3), 2)
-            xg_e = round(np.random.uniform(0.7, 1.8), 2)
+            xg_d = round(float(np.random.uniform(1.2, 2.3)), 2)
+            xg_e = round(float(np.random.uniform(0.7, 1.8)), 2)
+            
+            # Calcul logique du score exact basé sur les xG arrondis
+            sim_buts_dom = int(round(xg_d))
+            sim_buts_ext = int(round(xg_e))
+            
             btts = "Oui (Fort)" if (xg_d > 1.3 and xg_e > 1.0) else "Non (Fermé)"
             over = "+2.5 Buts (68%)" if (xg_d + xg_e > 2.5) else "Moins de 2.5 Buts (62%)"
             
@@ -173,7 +175,7 @@ if menu_choix == "📊 Analyseur IA Pro":
             if st.button(f"⚡ Consommer 1 crédit & débloquer l'analyse détaillée pour {nom_dom}", key=f"btn_{match_id}"):
                 if st.session_state.credits > 0:
                     st.session_state.credits -= 1
-                    st.success(f"Analyse approfondie débloquée ! Score exact estimé par le modèle : 2-1. Il vous reste {st.session_state.credits} crédit(s).")
+                    st.success(f"Analyse approfondie débloquée ! Score exact estimé par le modèle : {sim_buts_dom} - {sim_buts_ext} (basé sur les xG {xg_d} vs {xg_e}). Il vous reste {st.session_state.credits} crédit(s).")
                     st.rerun()
                 else:
                     st.error("Crédits épuisés pour aujourd'hui !")
@@ -193,8 +195,8 @@ elif menu_choix == "🔥 Matchs & xG du Jour":
             match_id = m['id']
             
             np.random.seed(match_id)
-            xg_d = round(np.random.uniform(1.1, 2.1), 2)
-            xg_e = round(np.random.uniform(0.8, 1.6), 2)
+            xg_d = round(float(np.random.uniform(1.1, 2.1)), 2)
+            xg_e = round(float(np.random.uniform(0.8, 1.6)), 2)
             
             st.markdown(f"""
             <div class="match-card">
@@ -244,7 +246,7 @@ elif menu_choix == "🎟️ Coupons VIP":
         <div style="font-size:14px; margin: 4px 0;">• Combiné de 3 matchs équilibrés avec analyses statistiques poussées.</div>
     </div>
     
-    <div class="coupon-card" style="border-color: #ef4444;">
+    <div class="coupon-card" style="border-color: #ef4444; margin-bottom: 30px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <span style="font-size:17px; font-weight:bold; color:#ef4444;">💎 Coupon MAXI VIP (Cote ~38.00)</span>
             <span class="badge-cote" style="background-color:#ef4444; color:#fff;">High Value</span>
