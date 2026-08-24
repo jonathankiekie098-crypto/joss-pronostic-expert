@@ -1,6 +1,3 @@
-rang_passe_dom,rang_actuel_dom,forme_dom,absents_dom,physique_dom,rang_passe_ext,rang_actuel_ext,forme_ext,absents_ext,physique_ext,tirs_dom,tirs_cadres_dom,possession_dom,resultat,corners_totaux,buts_mt_dom,buts_mt_ext,buts_dom,buts_ext
-1,2,0.85,0,90,5,4,0.60,1,80,15,7,58,1,10,1,0,2,1
-3,5,0.70,1,85,2,3,0.75,0,88,12,5,50,0,9,0,0,1,1
-6,8,0.50,2,75,4,2,0.80,0,92,10,4,45,2,11,0,1,0,2
-2,1,0.90,0,95,7,9,0.40,3,70,18,9,65,1,8,2,0,3,0
-4,3,0.65,1,82,3,5,0.65,1,83,11,4,51,0,7,1,1,1,1
+equipe_dom,equipe_ext,buts_marques_dom,buts_encaisses_dom,buts_marques_ext,buts_encaisses_ext,xg_dom,xg_ext,absents_cles_dom,absents_cles_ext
+Real Madrid,Barcelona,2.1,0.8,1.9,1.1,2.3,1.7,0,1
+Arsenal,Chelsea,1.8,0.7,1.2,1.4,1.9,1.1,1,0
