@@ -18,9 +18,6 @@ st.markdown("""
         border: 1px solid #334155; border-radius: 14px; padding: 20px; margin-bottom: 20px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-    .metric-box {
-        background: #020617; border: 1px solid #1e293b; padding: 12px; border-radius: 8px; text-align: center;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -42,7 +39,7 @@ if menu == "🔍 Analyseur de Match sur Mesure (Anti-Erreur)":
     col_s1, col_s2 = st.columns(2)
     with col_s1:
         equipe_dom = st.text_input("Équipe Domicile", "Ex: Bologna FC")
-         bloc_dom = st.selectbox("Style Bloc Domicile", ["Offensif / Haut", "Équilibré", "Bloc Bas / Ultra-Solide"])
+        bloc_dom = st.selectbox("Style Bloc Domicile", ["Offensif / Haut", "Équilibré", "Bloc Bas / Ultra-Solide"])
     with col_s2:
         equipe_ext = st.text_input("Équipe Extérieur", "Ex: SS Lazio")
         bloc_ext = st.selectbox("Style Bloc Extérieur", ["Contre-attaque foudroyante", "Bloc ultra-compact (Bloque le jeu)", "Offensif"])
@@ -51,7 +48,6 @@ if menu == "🔍 Analyseur de Match sur Mesure (Anti-Erreur)":
         st.markdown("---")
         st.markdown(f"### 📋 Rapport d'Analyse : {equipe_dom} vs {equipe_ext}")
         
-        # Logique d'expert stricte
         if "Bloc Bas" in bloc_ext or "compact" in bloc_ext:
             st.error(f"⚠️ **ALERTE PIÈGE DÉTECTÉ :** L'équipe extérieure ({equipe_ext}) aligne un profil de bloc compact. Le risque de match fermé (type 0-0 ou 0-1 sur un exploit en transition) est **très élevé**.")
             st.success("🎯 **Recommandation Pro :** Bannir le score exact ou la victoire sèche du favori. Privilégier le **Moins de 2.5 buts** ou la **Double Chance X2**.")
